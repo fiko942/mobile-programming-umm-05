@@ -89,11 +89,25 @@ Notes
 
 ## Author
 
-- Name: Wiji Fiko Teren
-- University: Universitas Muhammadiyah Malang
-- Email: tobellord@gmail.com
-- Website: https://wijifikoteren.streampeg.com
-- Avatar: https://avatars.githubusercontent.com/u/84434815?v=4
+<table>
+	<tr>
+		<td width="120" valign="top">
+			<img src="https://avatars.githubusercontent.com/u/84434815?v=4" alt="Wiji Fiko Teren" width="110" style="border-radius:12px; object-fit:cover;" />
+		</td>
+		<td valign="top">
+			<strong>Name:</strong> Wiji Fiko Teren<br/>
+			<strong>University:</strong> Universitas Muhammadiyah Malang<br/>
+			<strong>Email:</strong> <a href="mailto:tobellord@gmail.com">tobellord@gmail.com</a><br/>
+			<strong>Website:</strong> <a href="https://wijifikoteren.streampeg.com" target="_blank">https://wijifikoteren.streampeg.com</a>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<sub>This project was created to fulfill Module 1 of the Mobile Programming course, with a focus on a clean, classic macOS High Sierra design.</sub>
+		</td>
+	</tr>
+  
+</table>
 
 ## Notes & constraints
 
