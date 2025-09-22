@@ -116,4 +116,4 @@ Notes
 
 ## License
 
-This repository currently has no explicit license. Add one if you plan to distribute or open‑source it.
+This project is licensed under the MIT License — see the [LICENSE](./LICENSE) file for details.
