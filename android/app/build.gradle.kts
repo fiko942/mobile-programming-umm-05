@@ -37,8 +37,46 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+
+    // Prevent macOS metadata files from being treated as Android resources
+    packaging {
+        resources {
+            excludes += setOf("/**/._*", "/**/.DS_Store")
+        }
+    }
 }
 
 flutter {
     source = "../.."
+}
+
+// Workaround for macOS AppleDouble files created on non-APFS volumes (e.g., exFAT/NTFS)
+// These files (like ._drawable-v21) can break AAPT2 resource parsing.
+// We proactively delete them from the build intermediates before parse*LocalResources tasks run.
+val removeAppleDouble by tasks.registering {
+    group = "cleanup"
+    description = "Remove AppleDouble (._*) and .DS_Store from intermediates to avoid AAPT2 failures"
+    doLast {
+        val roots = listOf(
+            file("$buildDir/intermediates/packaged_res"),
+            file("$buildDir"),
+        )
+        roots.filter { it.exists() }.forEach { root ->
+            root.walkTopDown().forEach { f ->
+                if (f.isFile && (f.name.startsWith("._") || f.name == ".DS_Store")) {
+                    f.delete()
+                }
+            }
+        }
+    }
+}
+
+// Ensure cleanup happens before resource parsing tasks
+tasks.matching { it.name.matches(Regex("parse.+LocalResources")) }.configureEach {
+    dependsOn(removeAppleDouble)
+}
+
+// Also run cleanup after packaging resources, as these directories tend to get the AppleDouble files
+tasks.matching { it.name.matches(Regex("package.+Resources")) }.configureEach {
+    finalizedBy(removeAppleDouble)
 }
