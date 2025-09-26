@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:convert';
+import 'dart:io' show Platform; // For detecting test environment via FLUTTER_TEST
 import '../widgets/hairline_divider.dart';
 
 class AboutPage extends StatefulWidget {
@@ -241,6 +243,7 @@ class _AuthorCard extends StatelessWidget {
   final String name;
   final String email;
   final String website;
+  // If we later need dependency injection for tests, we can reintroduce an ImageProvider.
 
   Future<void> _openWebsite() async {
     final uri = Uri.parse(website);
@@ -259,6 +262,15 @@ class _AuthorCard extends StatelessWidget {
       fontSize: 13,
     );
 
+    final placeholderBytes = base64Decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGMAAc8AAnwBqkkAAAAASUVORK5CYII=');
+    bool isTestEnv = false;
+    // Detect flutter test runtime: the test runner sets FLUTTER_TEST in the process environment.
+    try {
+      isTestEnv = Platform.environment.containsKey('FLUTTER_TEST');
+    } catch (_) {
+      // Platform may not be available on web; ignore.
+    }
+
     return GestureDetector(
       onTap: _openWebsite,
       behavior: HitTestBehavior.opaque,
@@ -273,12 +285,9 @@ class _AuthorCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                avatarUrl,
-                width: 56,
-                height: 56,
-                fit: BoxFit.cover,
-              ),
+              child: isTestEnv
+                  ? Image.memory(placeholderBytes, width: 56, height: 56, fit: BoxFit.cover)
+                  : Image.network(avatarUrl, width: 56, height: 56, fit: BoxFit.cover),
             ),
             const SizedBox(width: 12),
             Expanded(

@@ -7,10 +7,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:helloworldfiko/main.dart';
 
 void main() {
+  // No network overrides needed now; About page uses an in-test placeholder image.
+
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and measure initial build time
     final buildWatch = Stopwatch()..start();
