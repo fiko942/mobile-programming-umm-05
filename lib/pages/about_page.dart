@@ -261,9 +261,13 @@ class _AuthorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = CupertinoTheme.of(context);
-    final infoStyle = theme.textTheme.textStyle.copyWith(fontSize: 14.5);
+    final isDark = theme.brightness == Brightness.dark;
+    final infoStyle = theme.textTheme.textStyle.copyWith(
+      fontSize: 14.5,
+      color: isDark ? CupertinoColors.white : const Color(0xFF111111),
+    );
     final subStyle = theme.textTheme.textStyle.copyWith(
-      color: const Color(0x99000000),
+      color: isDark ? CupertinoColors.systemGrey : const Color(0x99000000),
       fontSize: 13,
     );
 
@@ -276,14 +280,17 @@ class _AuthorCard extends StatelessWidget {
       // Platform may not be available on web; ignore.
     }
 
+  final Color cardBg = theme.barBackgroundColor;
+    final borderColor = isDark ? CupertinoColors.white.withOpacity(0.06) : const Color(0x33000000);
+
     return GestureDetector(
       onTap: _openWebsite,
       behavior: HitTestBehavior.opaque,
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFFF8F8F8),
+          color: cardBg,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: const Color(0x33000000), width: 0.5),
+          border: Border.all(color: borderColor, width: 0.5),
         ),
         padding: const EdgeInsets.all(12),
         child: Row(
@@ -295,7 +302,7 @@ class _AuthorCard extends StatelessWidget {
                   : Image.network(avatarUrl, width: 56, height: 56, fit: BoxFit.cover),
             ),
             const SizedBox(width: 12),
-            Expanded(
+                Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -306,7 +313,7 @@ class _AuthorCard extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(CupertinoIcons.arrow_up_right_diamond, size: 18, color: Color(0x99000000)),
+            Icon(CupertinoIcons.arrow_up_right_diamond, size: 18, color: subStyle.color),
           ],
         ),
       ),
