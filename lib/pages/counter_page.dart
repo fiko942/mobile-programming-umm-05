@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import '../widgets/theme_toggle.dart';
 
 class CounterPage extends StatefulWidget {
   const CounterPage({super.key});
@@ -17,8 +18,9 @@ class _CounterPageState extends State<CounterPage> {
   Widget build(BuildContext context) {
     final theme = CupertinoTheme.of(context);
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Counter'),
+      navigationBar: CupertinoNavigationBar(
+        middle: const Text('Counter'),
+        trailing: const ThemeToggle(),
       ),
       child: SafeArea(
         child: Center(

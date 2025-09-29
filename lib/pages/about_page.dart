@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../widgets/theme_toggle.dart';
 import 'dart:convert';
 import 'dart:io' show Platform; // For detecting test environment via FLUTTER_TEST
 import '../widgets/hairline_divider.dart';
@@ -36,6 +37,9 @@ class _AboutPageState extends State<AboutPage> {
       _emailController.text.isNotEmpty &&
       _nameController.text.isNotEmpty &&
       _messageController.text.isNotEmpty;
+  // ''
+  // i
+  // if
 
   void _validateEmail(String value) {
     final v = value.trim();
@@ -123,8 +127,9 @@ class _AboutPageState extends State<AboutPage> {
     );
 
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('About'),
+      navigationBar: CupertinoNavigationBar(
+        middle: const Text('About'),
+        trailing: const ThemeToggle(),
       ),
       child: SafeArea(
         child: SingleChildScrollView(
